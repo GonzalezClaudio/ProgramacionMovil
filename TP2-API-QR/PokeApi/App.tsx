@@ -39,16 +39,16 @@ export default function App() {
   const [prevUrl, setPrevUrl] = useState<string | null>(null);
   const [currentUrl, setCurrentUrl] = useState<string>(INITIAL_URL);
 
-  // simple in-memory cache to avoid flicker between pages
+
   const cacheRef = useRef<Map<string, ApiResponse>>(new Map());
 
-  // fetch function using native fetch
+  
   const fetchList = async (url: string, showLoading = true) => {
     try {
       if (showLoading) setLoading(true);
       setError(null);
 
-      // serve from cache if present (instant)
+      
       const cached = cacheRef.current.get(url);
       if (cached) {
         setData(cached.results);
@@ -74,14 +74,14 @@ export default function App() {
     } catch (err: any) {
       console.error("Fetch error:", err);
       setError(err.message || "Error de red");
-      setData([]); // clear shown data on error (you could keep cached if exists)
+      setData([]); // 
       return null;
     } finally {
       if (showLoading) setLoading(false);
     }
   };
 
-  // initial load
+  
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -91,10 +91,9 @@ export default function App() {
     return () => {
       mounted = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [currentUrl]);
 
-  // pull-to-refresh handler
   const onRefresh = async () => {
     setRefreshing(true);
     setError(null);
